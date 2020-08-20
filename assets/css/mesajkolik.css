@@ -1,0 +1,150 @@
+.mesajkolik_label {
+  background: #e69090;
+  margin-left: 2px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.mesajkolik_label:hover {
+  background: #c24b4b;
+}
+
+.mesajkolik_parameters {
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.mesajkolik_switch_container {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.mesajkolik_switch_container .toggle {
+  margin: auto;
+}
+
+.mesajkolik_title_container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.mesajkolik_title_container p {
+  font-size: 16px;
+}
+
+.mesajkolik_text_container {
+  height: 140px;
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: space-evenly;
+}
+
+.mesajkolik_option_row {
+  border-bottom: 1px solid #e6e6e6;
+  padding: 25px;
+}
+
+.mesajkolik_row {
+  border-bottom: 1px solid #e6e6e6;
+}
+
+.toggle-off::before {
+  border-radius: 15px;
+  position: absolute;
+  content: "";
+  height: 100%;
+  width: 60px;
+  left: -30px;
+  bottom: 0px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+#wpfooter {
+  position: inherit;
+}
+
+textarea.form-control {
+  border: 1px solid #7e8993;
+  background-color: #fff;
+}
+
+.input-group-text {
+  border: 1px solid #7e8993;
+}
+
+.table th {
+  padding: 0.2rem .5rem;
+  vertical-align: middle;
+}
+
+.mesajkolik_label_bulk {
+  background: #e69090;
+  margin-left: 2px;
+  color: #fff;
+  cursor: pointer;
+}
+
+#alert-modal-mesajkolik .modal-footer {
+  justify-content: center !important;
+}
+
+#alert-modal-mesajkolik #alert-modal {
+  top: calc(50vh - 200px);
+}
+
+button.btn {
+  border-radius: 0.25rem !important;
+}
+
+.modal {
+  padding-top: 50px;
+}
+
+.mesajkolik_alert_danger, .mesajkolik_alert_success, .mesajkolik_alert_response {
+  font-size: 30pt !important;
+  border-radius: 50%;
+  color: #fff !important;
+  padding: 10px;
+  margin-bottom: 20px;
+  height: 60px;
+  width: 60px;
+}
+
+.mesajkolik_alert_danger {
+  background: red;
+}
+
+.mesajkolik_alert_success {
+  background: green;
+}
+
+.mesajkolik_alert_response {
+  font-size: 44pt !important;
+  background-color: none;
+  color: #222 !important;
+}
+
+.logostyle {
+  position: relative;
+}
+
+#users-bulk-table tr th {
+  width: 102px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.msgbox {
+  border-left: 6px solid #2196F3;
+  border-left-width: .25rem;
+  border-top: 1px solid #7A848C;
+  border-bottom: 1px solid #7A848C;
+  border-right: 1px solid #7A848C;
+  border-radius: 5px;
+  padding: 5px 15px;
+}
