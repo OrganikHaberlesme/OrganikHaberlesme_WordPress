@@ -1,36 +1,36 @@
-$(function() {
+jQuery(function() {
 
   //başlangıçta tüm switchlerin valueleri arraya yükleniyor
-  $('.user-select-bulk').each(function() {
-    pushToggle( $.trim($(this).val()) );
+  jQuery('.user-select-bulk').each(function() {
+    pushToggle( jQuery.trim(jQuery(this).val()) );
   });
 
   // - LABEL
-  $('.mesajkolik_label').on('click', function() {
-    var data = $(this).parent().parent().attr('data-id');
-    var val = $('#pills-auto-sms div[data-id="' + data + '"] textarea').val();
-    $('#pills-auto-sms div[data-id="' + data + '"] textarea').val(val + ' ' + $(this).html());
+  jQuery('.mesajkolik_label').on('click', function() {
+    var data = jQuery(this).parent().parent().attr('data-id');
+    var val = jQuery('#pills-auto-sms div[data-id="' + data + '"] textarea').val();
+    jQuery('#pills-auto-sms div[data-id="' + data + '"] textarea').val(val + ' ' + jQuery(this).html());
   });
 
-  $('.mesajkolik_label_bulk').on('click', function() {
-    var data = $(this).parent().parent().attr('data-id');
-    var val = $('#parent-modal-bulk textarea').val();
-    $('#parent-modal-bulk textarea').val(val + ' ' + $(this).html());
+  jQuery('.mesajkolik_label_bulk').on('click', function() {
+    var data = jQuery(this).parent().parent().attr('data-id');
+    var val = jQuery('#parent-modal-bulk textarea').val();
+    jQuery('#parent-modal-bulk textarea').val(val + ' ' + jQuery(this).html());
 
   });
 
   // - SWITCH
-  $('.mesajkolik_check').on('change', function() {
-    var data = $(this).parent().parent().attr('data-id');
-    if ($(this).is(':checked')) {
-      $('div.mesajkolik_option[data-id="' + $(this).attr('data-id') + '"]').fadeIn();
+  jQuery('.mesajkolik_check').on('change', function() {
+    var data = jQuery(this).parent().parent().attr('data-id');
+    if (jQuery(this).is(':checked')) {
+      jQuery('div.mesajkolik_option[data-id="' + jQuery(this).attr('data-id') + '"]').fadeIn();
     } else {
-      $('div.mesajkolik_option[data-id="' + $(this).attr('data-id') + '"]').fadeOut();
+      jQuery('div.mesajkolik_option[data-id="' + jQuery(this).attr('data-id') + '"]').fadeOut();
     }
   });
 
   //Datatables
-  $('#users-bulk-table').DataTable({
+  jQuery('#users-bulk-table').DataTable({
     stateSave: true,
     "aoColumnDefs": [{
       "bSortable": false,
@@ -41,60 +41,60 @@ $(function() {
     "info": false
   });
 
-  $('#users-bulk-table').on('click', '.toggle-group', function(){
+  jQuery('#users-bulk-table').on('click', '.toggle-group', function(){
       // ... skipped ...
   });
 
   //Select All Toggle
   var change = false;
-  $('#toggle-select-all-users').change(function() {
+  jQuery('#toggle-select-all-users').change(function() {
     if (!change) {
       change = true;
-      var allTog = $(this).is(':checked') ? true : false;
-      $('.user-select-bulk').bootstrapToggle($(this).is(':checked') ? 'on' : 'off');
-      $('.user-select-bulk').each(function() {
-        allTog ? pushToggle( $.trim($(this).val()) ) : unPushToggle( $.trim($(this).val()) );
+      var allTog = jQuery(this).is(':checked') ? true : false;
+      jQuery('.user-select-bulk').bootstrapToggle(jQuery(this).is(':checked') ? 'on' : 'off');
+      jQuery('.user-select-bulk').each(function() {
+        allTog ? pushToggle( jQuery.trim(jQuery(this).val()) ) : unPushToggle( jQuery.trim(jQuery(this).val()) );
       });
       change = false;
     }
   });
   //Select User Toggle
-  $('.user-select-bulk').on('change', function() {
+  jQuery('.user-select-bulk').on('change', function() {
     if (!change) {
       change = true;
-      $(this).is(':checked') ? pushToggle( $.trim($(this).val()) ) : unPushToggle( $.trim($(this).val()) );
-      var checked = $('.user-select-bulk').length == $('.user-select-bulk:checked').length;
-      if ($('#toggle-select-all-users').is(':checked') != checked) {
-        $('#toggle-select-all-users').bootstrapToggle(checked ? 'on' : 'off');
+      jQuery(this).is(':checked') ? pushToggle( jQuery.trim(jQuery(this).val()) ) : unPushToggle( jQuery.trim(jQuery(this).val()) );
+      var checked = jQuery('.user-select-bulk').length == jQuery('.user-select-bulk:checked').length;
+      if (jQuery('#toggle-select-all-users').is(':checked') != checked) {
+        jQuery('#toggle-select-all-users').bootstrapToggle(checked ? 'on' : 'off');
       }
       change = false;
     }
   });
-  $('.mesajkolik_check').change(function() {
-    var checked = $(this).prop('checked') ? '1' : '0';
-    $(this).val(checked);
+  jQuery('.mesajkolik_check').change(function() {
+    var checked = jQuery(this).prop('checked') ? '1' : '0';
+    jQuery(this).val(checked);
   })
 
 
-  $('#mesajkolik_status').change(function() {
-    var stat = $(this).prop('checked') ? '1' : '0';
+  jQuery('#mesajkolik_status').change(function() {
+    var stat = jQuery(this).prop('checked') ? '1' : '0';
     mesajkolik_alert_responser(true);
-    $.post(ajaxurl, {action: 'mesajkolik_status_change',mesajkolik_status: stat}, function(data){
+    jQuery.post(ajaxurl, {action: 'mesajkolik_status_change',mesajkolik_status: stat}, function(data){
       console.log(data);
       mesajkolik_alert_responser(false);
     });
   });
 
   // - CLICK EVENTS
-  $("#form-sms-bulk").on('submit', function(e) {
+  jQuery("#form-sms-bulk").on('submit', function(e) {
     e.preventDefault();
     mesajkolik_alert_responser(true);
-    $.post(ajaxurl, $(this).serialize(), function(data){
+    jQuery.post(ajaxurl, jQuery(this).serialize(), function(data){
       data = JSON.parse(data);
       mesajkolik_alert_responser(false);
       if(data.result){
         mesajkolik_alert('SMS Gönderimi Başarılı !', true);
-        $(this).trigger('reset');
+        jQuery(this).trigger('reset');
       }else{
         mesajkolik_alert('SMS Gönderiminde Bir Problem Oluştu.', false);
       }
@@ -102,18 +102,18 @@ $(function() {
   });
 
   // - FORM EVENTS
-  $('#form-auto-sms').on('submit', function(e){
+  jQuery('#form-auto-sms').on('submit', function(e){
     e.preventDefault();
     var cont=true;
-    $('form#form-auto-sms input').each(function() {
-      if ($.trim($(this).val()) == '') {
+    jQuery('form#form-auto-sms input').each(function() {
+      if (jQuery.trim(jQuery(this).val()) == '') {
         cont = false;
         mesajkolik_alert('Lütfen Tüm Alanları Doldurunuz', false);
       }
     });
     if (cont) {
       mesajkolik_alert_responser(true);
-      $.post(ajaxurl, $(this).serialize(), function(data){
+      jQuery.post(ajaxurl, jQuery(this).serialize(), function(data){
         mesajkolik_alert_responser(false);
         if(data){
           mesajkolik_alert('Ayarlarınız Başarıyla Kayıt Edildi', true);
@@ -124,26 +124,27 @@ $(function() {
     }
   });
 
-  $("#form-group-name").on('submit', function(e) {
+  jQuery("#form-group-name").on('submit', function(e) {
     e.preventDefault();
     mesajkolik_alert_responser(true);
-    $.post(ajaxurl, $(this).serialize(), function(data){
+    jQuery.post(ajaxurl, jQuery(this).serialize(), function(data){
       mesajkolik_alert_responser(false);
       data = JSON.parse(data);
       mesajkolik_alert(data.message, data.result);
-      if(data.result) $(this).trigger('reset');
+      if(data.result) jQuery(this).trigger('reset');
     });
   });
 
-  $('.form_private_sms').on('submit', function(e){
+  jQuery('.form_private_sms').on('submit', function(e){
     e.preventDefault();
     mesajkolik_alert_responser(true);
-    $.post(ajaxurl, $(this).serialize(), function(data){
+    jQuery.post(ajaxurl, jQuery(this).serialize(), function(data){
+      console.log(data);
+      data = JSON.parse(data);
       mesajkolik_alert_responser(false);
       if(data.result){
         mesajkolik_alert('SMS Gönderimi Başarılı !', true);
-        $(this).trigger('reset');
-        afterBulkSms();
+        jQuery(this).trigger('reset');
       }else{
         mesajkolik_alert('SMS Gönderiminde Bir Problem Oluştu.', false);
       }
@@ -152,15 +153,15 @@ $(function() {
 
 
   // - BULK SMS MODAL
-  $('#bulkPrivateSmsModal').on('show.bs.modal', function (event) {
-    var allselected = $("#form-sms-bulk").serializeArray();
+  jQuery('#bulkPrivateSmsModal').on('show.bs.modal', function (event) {
+    var allselected = jQuery("#form-sms-bulk").serializeArray();
     var send = [];
-    allselected = $.each(allselected, function(i, field){
+    allselected = jQuery.each(allselected, function(i, field){
         send.push(field.value);
     });
-    var button = $(event.relatedTarget)
+    var button = jQuery(event.relatedTarget)
     var phone = button.data('phone')
-    var modal = $(this)
+    var modal = jQuery(this)
     if (phone == '0') {
       modal.find('.modal-body #recipient-name').val(selectedtoggle)
     }else {
@@ -173,23 +174,23 @@ $(function() {
 
 // - ALERT EVENTS
 function mesajkolik_alert(text, success){
-  $('#alert-modal-mesajkolik .mesajkolik_alert_success').hide();
-  $('#alert-modal-mesajkolik .mesajkolik_alert_danger').hide();
+  jQuery('#alert-modal-mesajkolik .mesajkolik_alert_success').hide();
+  jQuery('#alert-modal-mesajkolik .mesajkolik_alert_danger').hide();
   if(success !== undefined){
-    $('#alert-modal-mesajkolik .mesajkolik_alert_'+(success ? 'success' : 'danger')).show();
+    jQuery('#alert-modal-mesajkolik .mesajkolik_alert_'+(success ? 'success' : 'danger')).show();
   }
-  $('#alert-modal-desc').html(text);
-  $('#alert-modal').modal('show');
+  jQuery('#alert-modal-desc').html(text);
+  jQuery('#alert-modal').modal('show');
 }
 
 function mesajkolik_alert_responser(e){
   var stat = e ? 'show' : 'hide';
-  $('#modal-responser').modal({backdrop: 'static', keyboard: false});
-  $('#modal-responser').modal(stat);
+  jQuery('#modal-responser').modal({backdrop: 'static', keyboard: false});
+  jQuery('#modal-responser').modal(stat);
 }
 
 function afterBulkSms(){
-  $('#toggle-select-all-users ,.user-select-bulk').bootstrapToggle('on');
+  jQuery('#toggle-select-all-users ,.user-select-bulk').bootstrapToggle('on');
 }
 
 var selectedtoggle=[];

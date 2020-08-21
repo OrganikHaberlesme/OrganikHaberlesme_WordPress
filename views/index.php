@@ -48,7 +48,11 @@ $users = get_users();
               <input class="" id="mesajkolik_status" name="mesajkolik_status" value="1" type="checkbox" <?= ((get_option('mesajkolik_status')) == 1) ? 'checked' : 'unchecked' ?> data-toggle="toggle" data-onstyle="success" data-offstyle="secondary" data-on=" " data-off=" ">
               <label  class="col-form-label ml-2" style="font-weight:700;">Eklenti Durumu</label>
             </div>
-
+          </div>
+          <div class="row mb-4">
+            <div class="col-sm-6">
+              <b>Mevcut SMS Krediniz: </b> <?php print_r($balance); ?>
+            </div>
           </div>
           <hr />
           <div class="row" >
@@ -186,13 +190,13 @@ $users = get_users();
                   <div class="input-group-prepend" style="width: 124px;">
                     <span class="input-group-text"  style="width: 100%;" id="span-input-1">Telefon</span>
                   </div>
-                  <input type="text" name="mesajkolik_auto_1_phones" value="<?= get_option("mesajkolik_auto_1_phones") ?>" class="form-control" placeholder="Sms gönderilecek numaraları giriniz. Ör: 05555555555,05444444444" aria-label="Telefon" aria-describedby="span-input-1">
+                  <input type="text" name="mesajkolik_auto_1_phones" value="<?= esc_html_e(get_option("mesajkolik_auto_1_phones"),'') ?>" class="form-control" placeholder="Sms gönderilecek numaraları giriniz. Ör: 05555555555,05444444444" aria-label="Telefon" aria-describedby="span-input-1">
                 </div>
                 <div class="input-group">
                   <div class="input-group-prepend" style="width: 124px;">
                     <span class="input-group-text" style="width: 100%;" id="hidden-textarea-1">Mesaj İçeriği</span>
                   </div>
-                  <textarea name="mesajkolik_auto_1_message" class="form-control" aria-label="Mesaj İçeriği" placeholder="[uye_adi] [uye_soyadi] üye oldu!" ><?= get_option("mesajkolik_auto_1_message") ?></textarea>
+                  <textarea name="mesajkolik_auto_1_message" class="form-control" aria-label="Mesaj İçeriği" placeholder="[uye_adi] [uye_soyadi] üye oldu!" ><?= esc_html_e(get_option("mesajkolik_auto_1_message"),'') ?></textarea>
                 </div>
                 <div class="input-group mesajkolik_parameters">
                   <span class="text-monospace">Parametreler: </span>
@@ -218,7 +222,7 @@ $users = get_users();
                   <div class="input-group-prepend" style="width: 124px;">
                     <span class="input-group-text" style="width: 100%;" id="hidden-textarea-2">Mesaj İçeriği</span>
                   </div>
-                  <textarea  name="mesajkolik_auto_2_message" class="form-control" aria-label="Mesaj İçeriği" placeholder="Üye olduğunuz için teşekkürler!"><?= get_option("mesajkolik_auto_2_message") ?></textarea>
+                  <textarea  name="mesajkolik_auto_2_message" class="form-control" aria-label="Mesaj İçeriği" placeholder="Üye olduğunuz için teşekkürler!"><?= esc_html_e(get_option("mesajkolik_auto_2_message"),'') ?></textarea>
                 </div>
                 <div class="input-group mesajkolik_parameters">
                   <span class="text-monospace">Parametreler: </span>
@@ -244,13 +248,13 @@ $users = get_users();
                   <div class="input-group-prepend" style="width: 124px;">
                     <span class="input-group-text" style="width: 100%;" id="span-input-3">Telefon</span>
                   </div>
-                  <input  name="mesajkolik_auto_3_phones" value="<?= get_option("mesajkolik_auto_3_phones") ?>" type="text" class="form-control" placeholder="Sms gönderilecek numaraları giriniz. Ör: 05555555555,05444444444" aria-label="Telefon" aria-describedby="span-input-3">
+                  <input  name="mesajkolik_auto_3_phones" value="<?= esc_html_e(get_option("mesajkolik_auto_3_phones"),'') ?>" type="text" class="form-control" placeholder="Sms gönderilecek numaraları giriniz. Ör: 05555555555,05444444444" aria-label="Telefon" aria-describedby="span-input-3">
                 </div>
                 <div class="input-group">
                   <div class="input-group-prepend" style="width: 124px;">
                     <span class="input-group-text" style="width: 100%;" id="hidden-textarea-3">Mesaj İçeriği</span>
                   </div>
-                  <textarea  name="mesajkolik_auto_3_message" class="form-control" aria-label="Mesaj İçeriği" placeholder="Bir yeni sipariş verildi!"><?= get_option("mesajkolik_auto_3_message") ?></textarea>
+                  <textarea  name="mesajkolik_auto_3_message" class="form-control" aria-label="Mesaj İçeriği" placeholder="Bir yeni sipariş verildi!"><?= esc_html_e(get_option("mesajkolik_auto_3_message"),'') ?></textarea>
                 </div>
                 <div class="input-group mesajkolik_parameters">
                   <span class="text-monospace">Parametreler: </span>
@@ -279,7 +283,7 @@ $users = get_users();
                   <div class="input-group-prepend" style="width: 124px;">
                     <span class="input-group-text" style="width: 100%;" id="hidden-textarea-4">Mesaj İçeriği</span>
                   </div>
-                  <textarea name="mesajkolik_auto_4_message" class="form-control" aria-label="Mesaj İçeriği" placeholder="Siparişiniz alındı!"><?= get_option("mesajkolik_auto_4_message") ?></textarea>
+                  <textarea name="mesajkolik_auto_4_message" class="form-control" aria-label="Mesaj İçeriği" placeholder="Siparişiniz alındı!"><?= esc_html_e(get_option("mesajkolik_auto_4_message"),'') ?></textarea>
                 </div>
                 <div class="input-group mesajkolik_parameters">
                   <span class="text-monospace">Parametreler: </span>
@@ -308,7 +312,7 @@ $users = get_users();
                   <div class="input-group-prepend" style="width: 124px;">
                     <span class="input-group-text" style="width: 100%;" id="hidden-textarea-5">Mesaj İçeriği</span>
                   </div>
-                  <textarea name="mesajkolik_auto_5_message" class="form-control" aria-label="Mesaj İçeriği" placeholder="Sayın [uye_adi] [uye_soyadi], [siparis_no] numaralı sipariş durumunuz [siparis_durum] olarak güncellenmiştir."><?= get_option("mesajkolik_auto_5_message") ?></textarea>
+                  <textarea name="mesajkolik_auto_5_message" class="form-control" aria-label="Mesaj İçeriği" placeholder="Sayın [uye_adi] [uye_soyadi], [siparis_no] numaralı sipariş durumunuz [siparis_durum] olarak güncellenmiştir."><?= esc_html_e(get_option("mesajkolik_auto_5_message"),'') ?></textarea>
                 </div>
                 <div class="input-group mesajkolik_parameters">
                   <span class="text-monospace">Parametreler: </span>
@@ -337,13 +341,13 @@ $users = get_users();
                   <div class="input-group-prepend" style="width: 124px;">
                     <span class="input-group-text" style="width: 100%;" id="span-input-3">Telefon</span>
                   </div>
-                  <input name="mesajkolik_auto_6_phones" value="<?= get_option("mesajkolik_auto_6_phones") ?>" type="text" class="form-control" placeholder="Sms gönderilecek numaraları giriniz. Ör: 05555555555,05444444444" aria-label="Telefon" aria-describedby="span-input-3">
+                  <input name="mesajkolik_auto_6_phones" value="<?= esc_html_e(get_option("mesajkolik_auto_6_phones"),'') ?>" type="text" class="form-control" placeholder="Sms gönderilecek numaraları giriniz. Ör: 05555555555,05444444444" aria-label="Telefon" aria-describedby="span-input-3">
                 </div>
                 <div class="input-group">
                   <div class="input-group-prepend" style="width: 124px;">
                     <span class="input-group-text" style="width: 100%;" id="hidden-textarea-6">Mesaj İçeriği</span>
                   </div>
-                  <textarea name="mesajkolik_auto_6_message" class="form-control" aria-label="Mesaj İçeriği" placeholder="[siparis_no] numaralı sipariş iptal edilmiştir."><?= get_option("mesajkolik_auto_6_message") ?></textarea>
+                  <textarea name="mesajkolik_auto_6_message" class="form-control" aria-label="Mesaj İçeriği" placeholder="[siparis_no] numaralı sipariş iptal edilmiştir."><?= esc_html_e(get_option("mesajkolik_auto_6_message"),'') ?></textarea>
                 </div>
                 <div class="input-group mesajkolik_parameters">
                   <span class="text-monospace">Parametreler: </span>
@@ -372,7 +376,7 @@ $users = get_users();
                   <div class="input-group-prepend" style="width: 124px;">
                     <span class="input-group-text" style="width: 100%;" id="hidden-textarea-7">Mesaj İçeriği</span>
                   </div>
-                  <textarea name="mesajkolik_auto_7_message" class="form-control" aria-label="Mesaj İçeriği"><?= get_option("mesajkolik_auto_7_message") ?></textarea>
+                  <textarea name="mesajkolik_auto_7_message" class="form-control" aria-label="Mesaj İçeriği"><?= esc_html_e(get_option("mesajkolik_auto_7_message"),'') ?></textarea>
                 </div>
                 <div class="input-group mesajkolik_parameters">
                   <span class="text-monospace">Parametreler: </span>
@@ -389,9 +393,9 @@ $users = get_users();
               <button type="submit" class="btn btn-primary">Kaydet</button>
             </div>
           </div>
-
-        </div>
         </form>
+        </div>
+
 
         <div class="tab-pane fade <?= $tab=='contact' ? ' show active' : '' ?>" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
             <div class="row">
@@ -403,7 +407,7 @@ $users = get_users();
                     </label>
                   <div class="col-md-3">
                     <input type="text" name="action" value="mesajkolik_groupbackup" hidden="">
-                    <input type="text" class="form-control-sm w-100" value="<?= get_option("mesajkolik_lastgroup") ?>" name="mesajkolik_lastgroup" id="contact-group-name" placeholder="Grup Adı">
+                    <input type="text" class="form-control-sm w-100" value="<?= esc_html_e(get_option("mesajkolik_lastgroup"),'') ?>" name="mesajkolik_lastgroup" id="contact-group-name" placeholder="Grup Adı">
                   </div>
                 </div>
 
@@ -430,13 +434,13 @@ $users = get_users();
           <div class="form-group row">
             <label for="username-settings" class="col-sm-2 col-form-label">Kullanıcı Adı: </label>
             <div class="col-sm-6">
-              <input type="text" class="form-control form-control-sm w-100" value="<?= get_option("mesajkolik_user") ?>" name="mesajkolik_user" placeholder="Kullanıcı Adınız">
+              <input type="text" class="form-control form-control-sm w-100" value="<?= esc_html_e(get_option("mesajkolik_user"),'') ?>" name="mesajkolik_user" placeholder="Kullanıcı Adınız">
             </div>
           </div>
           <div class="row">
             <label for="private-phone" class="col-sm-2 col-form-label">Şifre: </label>
             <div class="col-sm-6">
-              <input type="password" class="form-control form-control-sm w-100" value="<?= get_option("mesajkolik_pass") ?>" name="mesajkolik_pass" placeholder="Şifreniz">
+              <input type="password" class="form-control form-control-sm w-100" value="<?= esc_html_e(get_option("mesajkolik_pass"),'') ?>" name="mesajkolik_pass" placeholder="Şifreniz">
             </div>
           </div>
           <div class="row mt-4">
@@ -457,7 +461,7 @@ $users = get_users();
               <select class="form-control w-100" name="mesajkolik_header" style="max-width: none;" <?= !$check_login ? 'disabled' : '' ?>>
                 <option disabled selected >Lütfen SMS Başlığı Seçiniz</option>
                 <?php foreach ($headers as $key){ ?>
-                  <option value="<?= $key->name ?>"<?= get_option("mesajkolik_header")==$key->name ? ' selected' : '' ?>><?= $key->name ?></option>
+                  <option value="<?= $key->name ?>"<?= get_option("mesajkolik_header") ==$key->name ? ' selected' : '' ?>><?= $key->name ?></option>
                 <?php } ?>
               </select>
             </div>
@@ -471,7 +475,7 @@ $users = get_users();
           <div class="form-group row mt-4">
             <label for="username-settings" class="col-sm-2 col-form-label">Telefon Meta Key: </label>
             <div class="col-sm-6">
-              <input type="text" class="form-control form-control-sm w-100" value="<?= get_option("mesajkolik_phone_column") ?>" name="mesajkolik_phone_column" placeholder="Kişi Numaralarının Alınacağı Stun Adı">
+              <input type="text" class="form-control form-control-sm w-100" value="<?= esc_html_e(get_option("mesajkolik_phone_column"),'') ?>" name="mesajkolik_phone_column" placeholder="Kişi Numaralarının Alınacağı Stun Adı">
 
             </div>
           </div>
@@ -582,7 +586,7 @@ $users = get_users();
       <div class="modal-body">
         <div class="text-center">
           <!-- <i class="mesajkolik_alert_response fa fa-clock-o fa-6"></i> -->
-          <img height="45" src="http://test.estetikbilisim.com/wp-admin/images/spinner-2x.gif"/>
+          <img height="45" src="<?= plugins_url('assets/img/spinner-2x.gif', dirname(__FILE__)) ?>"/>
           <br /> <br />
           <span>Lütfen Bekleyiniz…</span>
         </div>

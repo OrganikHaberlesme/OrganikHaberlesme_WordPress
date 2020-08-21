@@ -11,20 +11,23 @@ class MesajkolikApi {
 
   private function call($action, $data=null){
     $url = "https://organikapi.com/v2/".self::$apikey."/$action/";
-    $ch = curl_init($url);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
     if($data!==null){
       $postData = is_array($data) || is_object($data) ? json_encode($data) : $data;
-      curl_setopt($ch, CURLOPT_POST, 1);
-      curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
+      $args = [
+        'body'        => $postData,
+        'timeout'     => '5',
+        'redirection' => '5',
+        'httpversion' => '1.0',
+        'blocking'    => true,
+        'headers'     => ['Content-Type: application/json; charset=utf-8'],
+        'cookies'     => [],
+      ];
+      $response = wp_remote_post($url, $args);
+    }else{
+      $response = wp_remote_get($url);
     }
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json; charset=utf-8']);
-    $result = curl_exec($ch);
-    $result_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    curl_close($ch);
+    $result_code = wp_remote_retrieve_response_code($response);
+    $result = wp_remote_retrieve_body($response);
     return $result_code==200 ? json_decode($result) : false;
   }
 

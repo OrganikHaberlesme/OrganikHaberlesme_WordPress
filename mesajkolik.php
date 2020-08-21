@@ -46,7 +46,8 @@ function mesajkolik_menus(){
 // - PAGE
 function mesajkolik_page_info(){
   $mesajkolik = new MesajkolikApi(get_option("mesajkolik_user"), get_option("mesajkolik_pass"));
-  $check_login = $mesajkolik->getBalance()!==false;
+  $balance = $mesajkolik->getBalance();
+  $check_login = $balance!==false;
   $headers = $mesajkolik->getHeaders();
   $tab = empty(get_option("mesajkolik_optionstab")) ? 'info' : get_option("mesajkolik_optionstab");
   if (!$check_login) {
@@ -64,7 +65,7 @@ function mesajkolik_page_info(){
 function mesajkolik_status_change() {
   global $wpdb;
   if (isset($_POST['mesajkolik_status'])) {
-    update_option('mesajkolik_status', $_POST['mesajkolik_status']);
+    update_option('mesajkolik_status', sanitize_text_field($_POST['mesajkolik_status']));
     echo json_encode(['result' => true]);
   }else {
     echo json_encode(['result' => false]);
@@ -74,31 +75,17 @@ function mesajkolik_status_change() {
 
 function mesajkolik_assets($hook){
   // - LOAD CSS
-  /*if($hook!= 'toplevel_page_mesajkolik') {
-    return;
-  }*/
   $plugin_url = plugin_dir_url( __FILE__ );
   wp_enqueue_style( 'bootstrapcss',  plugins_url('mesajkolik/assets/css/bootstrap.min.css'));
   wp_enqueue_style( 'mesajkolikcss',  plugins_url('mesajkolik/assets/css/mesajkolik.css'));
   wp_enqueue_style( 'mesajkolikdtcss',  plugins_url('mesajkolik/assets/css/dataTables.bootstrap4.min.css'));
-  wp_enqueue_style( 'mesajkolikfontawesome',  'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css');
+  wp_enqueue_style( 'mesajkolikfontawesome',   plugins_url('mesajkolik/assets/awesome/css/font-awesome.min.css'));
 
-  // wp_enqueue_style( 'font-awesome',   $plugin_url . '/lib/fonts/css/font-awesome.min.css' );
-  // wp_enqueue_style( 'style',         $plugin_url . 'lib/css/style.css' );
-  // wp_enqueue_style( 'sweetalert2',    $plugin_url . 'lib/js/sweetalert2/dist/sweetalert2.css' );
-  // wp_enqueue_style( 'dataTables',    $plugin_url . 'lib/css/bootstrap-table.min.css' );
 
-  // - LOAD JS
-  wp_register_script('jqueryminjs', 'https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js');
-  wp_enqueue_script('jqueryminjs');
-
-  wp_register_script('bootstrapminjs', 'https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js');
+  wp_register_script('bootstrapminjs', plugins_url('bootstrap.min.js', dirname(__FILE__).'/assets/js/1/'));
   wp_enqueue_script('bootstrapminjs');
 
-  wp_register_script('popperjs', 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js');
-  wp_enqueue_script('popperjs');
-
-  wp_register_script('tooglejs', 'https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js');
+  wp_register_script('tooglejs', plugins_url('bootstrap-toggle.min.js', dirname(__FILE__).'/assets/js/1/'));
   wp_enqueue_script('tooglejs');
 
   wp_register_script('datatablesjs', plugins_url('jquery.dataTables.min.js', dirname(__FILE__).'/assets/js/1/'));
@@ -161,34 +148,35 @@ function mesajkolik_options(){
 
 function mesajkolik_formautosms(){
   global $wpdb;
-  update_option('mesajkolik_optionstab', $_POST['mesajkolik_optionstab']);
+  
+  update_option('mesajkolik_optionstab', sanitize_text_field($_POST['mesajkolik_optionstab']));
   //Yeni üye olunca, belirlenen numaralara sms gönderilsin
-  update_option('mesajkolik_auto_1_toggle', $_POST['mesajkolik_auto_1_toggle']);
-  update_option('mesajkolik_auto_1_phones', $_POST['mesajkolik_auto_1_phones']);
-  update_option('mesajkolik_auto_1_message', $_POST['mesajkolik_auto_1_message']);
+  update_option('mesajkolik_auto_1_toggle', sanitize_text_field($_POST['mesajkolik_auto_1_toggle']));
+  update_option('mesajkolik_auto_1_phones', sanitize_text_field($_POST['mesajkolik_auto_1_phones']));
+  update_option('mesajkolik_auto_1_message', sanitize_text_field($_POST['mesajkolik_auto_1_message']));
   //Yeni üye olunca, müşteriye sms gönderilsin
-  update_option('mesajkolik_auto_2_toggle', $_POST['mesajkolik_auto_2_toggle']);
-  update_option('mesajkolik_auto_2_message', $_POST['mesajkolik_auto_2_message']);
+  update_option('mesajkolik_auto_2_toggle', sanitize_text_field($_POST['mesajkolik_auto_2_toggle']));
+  update_option('mesajkolik_auto_2_message', sanitize_text_field($_POST['mesajkolik_auto_2_message']));
   //Yeni sipariş geldiğinde, belirlenen numaralara sms gönderilsin
-  update_option('mesajkolik_auto_3_toggle', $_POST['mesajkolik_auto_3_toggle']);
-  update_option('mesajkolik_auto_3_phones', $_POST['mesajkolik_auto_3_phones']);
-  update_option('mesajkolik_auto_3_message', $_POST['mesajkolik_auto_3_message']);
+  update_option('mesajkolik_auto_3_toggle', sanitize_text_field($_POST['mesajkolik_auto_3_toggle']));
+  update_option('mesajkolik_auto_3_phones', sanitize_text_field($_POST['mesajkolik_auto_3_phones']));
+  update_option('mesajkolik_auto_3_message', sanitize_text_field($_POST['mesajkolik_auto_3_message']));
   //Yeni üye olunca, müşteriye sms gönderilsin
-  update_option('mesajkolik_auto_4_toggle', $_POST['mesajkolik_auto_4_toggle']);
-  update_option('mesajkolik_auto_4_message', $_POST['mesajkolik_auto_4_message']);
+  update_option('mesajkolik_auto_4_toggle', sanitize_text_field($_POST['mesajkolik_auto_4_toggle']));
+  update_option('mesajkolik_auto_4_message', sanitize_text_field($_POST['mesajkolik_auto_4_message']));
   //Ürünün sipariş durumu değiştiğinde müşteriye sms gönderilsin
-  update_option('mesajkolik_auto_5_toggle', $_POST['mesajkolik_auto_5_toggle']);
-  update_option('mesajkolik_auto_5_message', $_POST['mesajkolik_auto_5_message']);
+  update_option('mesajkolik_auto_5_toggle', sanitize_text_field($_POST['mesajkolik_auto_5_toggle']));
+  update_option('mesajkolik_auto_5_message', sanitize_text_field($_POST['mesajkolik_auto_5_message']));
   //Sipariş iptal edildiğinde belirlediğim numaralı sms ile bilgilendir
-  update_option('mesajkolik_auto_6_toggle', $_POST['mesajkolik_auto_6_toggle']);
-  update_option('mesajkolik_auto_6_phones', $_POST['mesajkolik_auto_6_phones']);
-  update_option('mesajkolik_auto_6_message', $_POST['mesajkolik_auto_6_message']);
+  update_option('mesajkolik_auto_6_toggle', sanitize_text_field($_POST['mesajkolik_auto_6_toggle']));
+  update_option('mesajkolik_auto_6_phones', sanitize_text_field($_POST['mesajkolik_auto_6_phones']));
+  update_option('mesajkolik_auto_6_message', sanitize_text_field($_POST['mesajkolik_auto_6_message']));
   //Ürün stoğa girdiğinde bekleme listesindekilere sms gönder (Wc Waitlist)
-  update_option('mesajkolik_auto_7_toggle', $_POST['mesajkolik_auto_7_toggle']);
-  update_option('mesajkolik_auto_7_message', $_POST['mesajkolik_auto_7_message']);
+  update_option('mesajkolik_auto_7_toggle', sanitize_text_field($_POST['mesajkolik_auto_7_toggle']));
+  update_option('mesajkolik_auto_7_message', sanitize_text_field($_POST['mesajkolik_auto_7_message']));
   //Yeni üye olunca, numarasını Organik Haberleşme rehberine ekle
-  update_option('mesajkolik_auto_8_toggle', $_POST['mesajkolik_auto_8_toggle']);
-  update_option('mesajkolik_auto_8_group', $_POST['mesajkolik_auto_8_group']);
+  update_option('mesajkolik_auto_8_toggle', sanitize_text_field($_POST['mesajkolik_auto_8_toggle']));
+  update_option('mesajkolik_auto_8_group', sanitize_text_field($_POST['mesajkolik_auto_8_group']));
   // echo true;
   // foreach ($_POST as $param_name => $param_val) {
   //     update_option($param_name, $param_val);
@@ -240,8 +228,8 @@ function mesajkolik_groupbackup(){
   $groupname = isset($_POST['mesajkolik_lastgroup']) ? $_POST['mesajkolik_lastgroup'] : get_option('mesajkolik_lastgroup');
   if(!empty($groupname)){
     if(isset($_POST['mesajkolik_lastgroup'])){
-      update_option('mesajkolik_lastgroup',$groupname);
-      update_option('mesajkolik_lastgroup_toggle',$_POST['mesajkolik_lastgroup_toggle']);
+      update_option('mesajkolik_lastgroup', sanitize_text_field($groupname));
+      update_option('mesajkolik_lastgroup_toggle', sanitize_text_field($_POST['mesajkolik_lastgroup_toggle']));
     }
     $groupadd = $mesajkolik->groupadd($groupname);
     if($groupadd->result == 0){
@@ -306,7 +294,6 @@ function mesajkolik_label_clear($message, $userid, $order_id=0){
   $orderStatus = $allStat[$orderStatNew];
 
   }
-
 
   return str_replace([
     '[uye_adi]',
