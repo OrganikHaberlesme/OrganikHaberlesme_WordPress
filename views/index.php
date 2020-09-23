@@ -1,6 +1,7 @@
 <?php
 $users = get_users();
 ?>
+<input type="text" id="mesajkolik_nonce" name="mesajkolik_nonce" value="<?php echo wp_create_nonce("mesajkolik_nonce"); ?>" hidden />
 <div class="container-fluid">
 
   <div class="card" style="max-width: initial;">
@@ -596,3 +597,6 @@ $users = get_users();
   </div>
 </div>
 </div>
+<script>
+var noncewp = "<?php echo wp_create_nonce("mesajkolik_nonce"); ?>";
+</script>

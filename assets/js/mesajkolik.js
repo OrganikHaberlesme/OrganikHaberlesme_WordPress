@@ -1,5 +1,9 @@
-jQuery(function() {
 
+var nonce = jQuery('#mesajkolik_nonce').val();
+var nonceserialize = "";
+jQuery(function() {
+  nonce = jQuery('#mesajkolik_nonce').val();
+  nonceserialize = "&mesajkolik_nonce="+nonce;
   //başlangıçta tüm switchlerin valueleri arraya yükleniyor
   jQuery('.user-select-bulk').each(function() {
     pushToggle( jQuery.trim(jQuery(this).val()) );
@@ -79,7 +83,7 @@ jQuery(function() {
   jQuery('#mesajkolik_status').change(function() {
     var stat = jQuery(this).prop('checked') ? '1' : '0';
     mesajkolik_alert_responser(true);
-    jQuery.post(ajaxurl, {action: 'mesajkolik_status_change',mesajkolik_status: stat}, function(data){
+    jQuery.post(ajaxurl, {action: 'mesajkolik_status_change',mesajkolik_status: stat,mesajkolik_nonce:nonce}, function(data){
       console.log(data);
       mesajkolik_alert_responser(false);
     });
@@ -89,14 +93,14 @@ jQuery(function() {
   jQuery("#form-sms-bulk").on('submit', function(e) {
     e.preventDefault();
     mesajkolik_alert_responser(true);
-    jQuery.post(ajaxurl, jQuery(this).serialize(), function(data){
+    jQuery.post(ajaxurl, jQuery(this).serialize()+nonceserialize, function(data){
       data = JSON.parse(data);
       mesajkolik_alert_responser(false);
       if(data.result){
         mesajkolik_alert('SMS Gönderimi Başarılı !', true);
         jQuery(this).trigger('reset');
       }else{
-        mesajkolik_alert('SMS Gönderiminde Bir Problem Oluştu.', false);
+        mesajkolik_alert(data.message, false);
       }
     });
   });
@@ -113,12 +117,14 @@ jQuery(function() {
     });
     if (cont) {
       mesajkolik_alert_responser(true);
-      jQuery.post(ajaxurl, jQuery(this).serialize(), function(data){
+      jQuery.post(ajaxurl, jQuery(this).serialize()+nonceserialize, function(data){
+        console.log(data);
+        data = JSON.parse(data);
         mesajkolik_alert_responser(false);
-        if(data){
+        if(data.result){
           mesajkolik_alert('Ayarlarınız Başarıyla Kayıt Edildi', true);
         }else{
-          mesajkolik_alert('Ayarlar Kayıt Edilirken Bir Problem Oluştu.', false);
+          mesajkolik_alert(data.message, false);
         }
       });
     }
@@ -127,7 +133,7 @@ jQuery(function() {
   jQuery("#form-group-name").on('submit', function(e) {
     e.preventDefault();
     mesajkolik_alert_responser(true);
-    jQuery.post(ajaxurl, jQuery(this).serialize(), function(data){
+    jQuery.post(ajaxurl, jQuery(this).serialize()+nonceserialize, function(data){
       mesajkolik_alert_responser(false);
       data = JSON.parse(data);
       mesajkolik_alert(data.message, data.result);
@@ -138,15 +144,14 @@ jQuery(function() {
   jQuery('.form_private_sms').on('submit', function(e){
     e.preventDefault();
     mesajkolik_alert_responser(true);
-    jQuery.post(ajaxurl, jQuery(this).serialize(), function(data){
-      console.log(data);
+    jQuery.post(ajaxurl, jQuery(this).serialize()+nonceserialize, function(data){
       data = JSON.parse(data);
       mesajkolik_alert_responser(false);
       if(data.result){
         mesajkolik_alert('SMS Gönderimi Başarılı !', true);
         jQuery(this).trigger('reset');
       }else{
-        mesajkolik_alert('SMS Gönderiminde Bir Problem Oluştu.', false);
+        mesajkolik_alert('SMS Gönderiminde Bir<br> Problem Oluştu.', false);
       }
     });
   });

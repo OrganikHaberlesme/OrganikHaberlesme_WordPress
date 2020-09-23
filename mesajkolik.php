@@ -62,14 +62,23 @@ function mesajkolik_page_info(){
 
 }
 
+function mesajkolik_nonce($vals)
+{
+  if (!wp_verify_nonce($vals['mesajkolik_nonce'], "mesajkolik_nonce")) {
+    echo json_encode(['result' => false, 'message' => "Bir sorun oluştu. Lütfen sayfayı yenileyip tekrar deneyin."],JSON_UNESCAPED_UNICODE);
+    wp_die();
+  }
+}
+
 function mesajkolik_status_change() {
   global $wpdb;
-  if (isset($_POST['mesajkolik_status'])) {
-    update_option('mesajkolik_status', sanitize_text_field($_POST['mesajkolik_status']));
-    echo json_encode(['result' => true]);
-  }else {
-    echo json_encode(['result' => false]);
-  }
+  mesajkolik_nonce($_REQUEST);
+    if (isset($_POST['mesajkolik_status'])) {
+      update_option('mesajkolik_status', sanitize_text_field($_POST['mesajkolik_status']));
+      echo json_encode(['result' => true, 'message' => "İşlem başarılı."]);
+    }else {
+      echo json_encode(['result' => false, 'message' => "İşlem gerçekleştirilemedi."]);
+    }
   wp_die();
 }
 
@@ -148,7 +157,7 @@ function mesajkolik_options(){
 
 function mesajkolik_formautosms(){
   global $wpdb;
-  
+  mesajkolik_nonce($_REQUEST);
   update_option('mesajkolik_optionstab', sanitize_text_field($_POST['mesajkolik_optionstab']));
   //Yeni üye olunca, belirlenen numaralara sms gönderilsin
   update_option('mesajkolik_auto_1_toggle', sanitize_text_field($_POST['mesajkolik_auto_1_toggle']));
@@ -181,15 +190,16 @@ function mesajkolik_formautosms(){
   // foreach ($_POST as $param_name => $param_val) {
   //     update_option($param_name, $param_val);
   // }
-  echo true;
+  echo json_encode(['result' => true, 'message' => 'İşlem Başarılı.']);
   wp_die();
 }
 
 function mesajkolik_privatesms(){
   global $wpdb;
+  mesajkolik_nonce($_REQUEST);
   $mesajkolik = new MesajkolikApi(get_option("mesajkolik_user"), get_option("mesajkolik_pass"));
   if(isset($_POST['gsm']) && isset($_POST['message'])){
-    $send = $mesajkolik->sendsms(str_replace('+', '', $_POST['gsm']), $_POST['message'], get_option("mesajkolik_header"));
+    $send = $mesajkolik->sendsms(str_replace('+', '', sanitize_text_field($_POST['gsm'])), sanitize_text_field($_POST['message']), get_option("mesajkolik_header"));
     echo json_encode($send);
   }
   wp_die();
@@ -198,12 +208,13 @@ function mesajkolik_privatesms(){
 // Toplu sms Sekmesi
 function mesajkolik_bulksms(){
   global $wpdb;
+  mesajkolik_nonce($_REQUEST);
   $mesajkolik = new MesajkolikApi(get_option("mesajkolik_user"), get_option("mesajkolik_pass"));
   if(!isset($_POST['id']) || !isset($_POST['message'])){
     echo json_encode(['result' => false, 'message' => 'Toplu sms gönderebilmek için numara seçmeli ve bir mesaj içeriği girmelisiniz.']);
   }
-
-  $user = is_array($_POST['id']) ? array_filter($_POST['id']) : array_filter(explode(',', $_POST['id']));
+  $postId = sanitize_text_field($_POST['id']);
+  $user = is_array($postId) ? array_filter($postId) : array_filter(explode(',', $postId));
   $sended = [];
   $sms = [];
 
@@ -213,7 +224,7 @@ function mesajkolik_bulksms(){
       $sended[] = $billing_phone;
       $sms[] = [
         'gsm' => str_replace('+', '', $billing_phone),
-        'message' => mesajkolik_label_clear($_POST['message'], $key)
+        'message' => mesajkolik_label_clear(sanitize_text_field($_POST['message']), $key)
       ];
     }
   }
@@ -224,8 +235,10 @@ function mesajkolik_bulksms(){
 
 function mesajkolik_groupbackup(){
   global $wpdb;
+  mesajkolik_nonce($_REQUEST);
   $mesajkolik = new MesajkolikApi(get_option("mesajkolik_user"), get_option("mesajkolik_pass"));
-  $groupname = isset($_POST['mesajkolik_lastgroup']) ? $_POST['mesajkolik_lastgroup'] : get_option('mesajkolik_lastgroup');
+  $postLastGroup = sanitize_text_field($_POST['mesajkolik_lastgroup']);
+  $groupname = isset($postLastGroup) ? $postLastGroup : get_option('mesajkolik_lastgroup');
   if(!empty($groupname)){
     if(isset($_POST['mesajkolik_lastgroup'])){
       update_option('mesajkolik_lastgroup', sanitize_text_field($groupname));
@@ -333,7 +346,7 @@ function mesajkolik_trigger_register($id){
   if(mesajkolik_status("mesajkolik_auto_2_toggle")){
     $message = empty(get_option("mesajkolik_auto_2_message")) ? "Üye olduğunuz için teşekkürler!" : get_option("mesajkolik_auto_2_message");
     $sms[] = [
-      'gsm' => str_replace('+', '', (empty(get_user_meta($id, "billing_phone", true)) ? $_POST['billing_phone'] : get_user_meta($id, "billing_phone", true))),
+      'gsm' => str_replace('+', '', (empty(get_user_meta($id, "billing_phone", true)) ? sanitize_text_field($_POST['billing_phone']) : get_user_meta($id, "billing_phone", true))),
       'message' => mesajkolik_label_clear($message, $id)
     ];
   }
@@ -354,7 +367,7 @@ function mesajkolik_trigger_checkout($order_id){
   if(mesajkolik_status('mesajkolik_auto_4_toggle')){
     $message = empty(get_option("mesajkolik_auto_4_message")) ? "Siparişiniz alındı!" : get_option("mesajkolik_auto_4_message");
     $sms[] = [
-      'gsm' => str_replace('+', '', (empty(get_user_meta($user_id, "billing_phone", true)) ? $_POST['billing_phone'] : get_user_meta($user_id, "billing_phone", true))),
+      'gsm' => str_replace('+', '', (empty(get_user_meta($user_id, "billing_phone", true)) ? sanitize_text_field($_POST['billing_phone']) : get_user_meta($user_id, "billing_phone", true))),
       'message' => mesajkolik_label_clear($message, $user_id)
     ];
   }
