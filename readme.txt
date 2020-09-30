@@ -3,7 +3,7 @@ Contributors: organikhaberlesme, emreyilmaz
 Donate link: https://www.organikhaberlesme.com.tr/
 Tags: organik haberleşme, toplu sms, sms, bulk sms, türkiye sms, yurtiçi sms, woocommerce sms, wordpress sms, mesajkolik, organik haberleşme teknolojileri
 Requires at least: 4.8
-Tested up to: 4.8
+Tested up to: 5.5
 Stable tag: 5.5
 Requires PHP: 7.0
 License: GPLv2 or later
