@@ -8,7 +8,7 @@ $users = get_users();
     <div class="row text-right d-flex flex-row-reverse">
       <div class="text-right logostyle">
         <a href="https://www.organikhaberlesme.com.tr/" target="_blank" alt="Organik Haberleşme">
-          <img height="90" src="<?= plugins_url('assets/img/organik-logo.png', dirname(__FILE__)) ?>"/>
+          <img height="90" src="<?= plugins_url('includes/img/organik-logo.png', dirname(__FILE__)) ?>"/>
         </a>
       </div>
     </div>
@@ -587,7 +587,7 @@ $users = get_users();
       <div class="modal-body">
         <div class="text-center">
           <!-- <i class="mesajkolik_alert_response fa fa-clock-o fa-6"></i> -->
-          <img height="45" src="<?= plugins_url('assets/img/spinner-2x.gif', dirname(__FILE__)) ?>"/>
+          <img height="45" src="<?= plugins_url('includes/img/spinner-2x.gif', dirname(__FILE__)) ?>"/>
           <br /> <br />
           <span>Lütfen Bekleyiniz…</span>
         </div>

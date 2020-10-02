@@ -38,7 +38,7 @@ function mesajkolik_menus(){
   $capability = 'manage_options';
   $menu_slug  = 'mesajkolik';
   $function   = 'mesajkolik_page_info';
-  $icon_url   = plugins_url('mesajkolik/assets/img/logo-menu.png');
+  $icon_url   = plugins_url('mesajkolik/includes/img/logo-menu.png');
   $position   = null; //1;
   add_menu_page($page_title, $menu_title, $capability, $menu_slug, $function, $icon_url, $position);
 }
@@ -85,25 +85,25 @@ function mesajkolik_status_change() {
 function mesajkolik_assets($hook){
   // - LOAD CSS
   $plugin_url = plugin_dir_url( __FILE__ );
-  wp_enqueue_style( 'bootstrapcss',  plugins_url('mesajkolik/assets/css/bootstrap.min.css'));
-  wp_enqueue_style( 'mesajkolikcss',  plugins_url('mesajkolik/assets/css/mesajkolik.css'));
-  wp_enqueue_style( 'mesajkolikdtcss',  plugins_url('mesajkolik/assets/css/dataTables.bootstrap4.min.css'));
-  wp_enqueue_style( 'mesajkolikfontawesome',   plugins_url('mesajkolik/assets/awesome/css/font-awesome.min.css'));
+  wp_enqueue_style( 'bootstrapcss',  plugins_url('mesajkolik/includes/css/bootstrap.min.css'));
+  wp_enqueue_style( 'mesajkolikcss',  plugins_url('mesajkolik/includes/css/mesajkolik.css'));
+  wp_enqueue_style( 'mesajkolikdtcss',  plugins_url('mesajkolik/includes/css/dataTables.bootstrap4.min.css'));
+  wp_enqueue_style( 'mesajkolikfontawesome',   plugins_url('mesajkolik/includes/awesome/css/font-awesome.min.css'));
 
 
-  wp_register_script('bootstrapminjs', plugins_url('bootstrap.min.js', dirname(__FILE__).'/assets/js/1/'));
+  wp_register_script('bootstrapminjs', plugins_url('bootstrap.min.js', dirname(__FILE__).'/includes/js/1/'));
   wp_enqueue_script('bootstrapminjs');
 
-  wp_register_script('tooglejs', plugins_url('bootstrap-toggle.min.js', dirname(__FILE__).'/assets/js/1/'));
+  wp_register_script('tooglejs', plugins_url('bootstrap-toggle.min.js', dirname(__FILE__).'/includes/js/1/'));
   wp_enqueue_script('tooglejs');
 
-  wp_register_script('datatablesjs', plugins_url('jquery.dataTables.min.js', dirname(__FILE__).'/assets/js/1/'));
+  wp_register_script('datatablesjs', plugins_url('jquery.dataTables.min.js', dirname(__FILE__).'/includes/js/1/'));
   wp_enqueue_script('datatablesjs');
 
-  wp_register_script('datatablebtjs', plugins_url('dataTables.bootstrap4.min.js', dirname(__FILE__).'/assets/js/1/'));
+  wp_register_script('datatablebtjs', plugins_url('dataTables.bootstrap4.min.js', dirname(__FILE__).'/includes/js/1/'));
   wp_enqueue_script('datatablebtjs');
 
-  wp_register_script('mesajkolikjs', plugins_url('mesajkolik.js', dirname(__FILE__).'/assets/js/1/'));
+  wp_register_script('mesajkolikjs', plugins_url('mesajkolik.js', dirname(__FILE__).'/includes/js/1/'));
   wp_enqueue_script('mesajkolikjs');
 }
 
